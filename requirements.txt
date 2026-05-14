@@ -1,0 +1,12 @@
+google-play-scraper
+pandas
+numpy
+scikit-learn
+spacy
+transformers
+torch
+vaderSentiment
+psycopg2-binary
+sqlalchemy
+pytest
+python-dotenv
