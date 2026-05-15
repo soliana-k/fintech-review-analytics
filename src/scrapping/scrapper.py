@@ -4,10 +4,11 @@ import os
 import time
 
 APPS = {
-    "CBE": "com.combanketh.mobilebanking",       
+    "CBE": "com.combanketh.mobilebanking",      
     "Abyssinia": "com.boa.boaMobileBanking",     
     "Dashen": "com.dashen.dashensuperapp",       
-    "Awash": "pegasus.project.awash.mobile.android.bundle.mobilebank" 
+
+    
 }
 
 def scrape_data():
@@ -20,9 +21,9 @@ def scrape_data():
             result, _ = reviews(
                 app_id,
                 lang='en', 
-                country='us', 
+                country='et', 
                 sort=Sort.NEWEST, 
-                count=450 
+                count=420 
             )
             
             if not result:
