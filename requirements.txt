@@ -12,3 +12,5 @@ pytest
 python-dotenv
 jupyter
 ipykernel
+matplotlib
+seaborn
