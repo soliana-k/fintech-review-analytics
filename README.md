@@ -40,6 +40,15 @@ This project strictly adheres to a modular Data Engineering pipeline design, cle
 ## 📁 Project Structure
 ```
 fintech-review-analytics/
+│
+├── scripts/                      
+│   └── run.py
+│
+├── data/                      
+│   ├── raw/
+│   ├── plots/   
+│   └── processed/
+│
 ├── src/
 │    ├── scrapping/
 │       ├── init.py
@@ -54,11 +63,14 @@ fintech-review-analytics/
 │       ├── init.py
 |       ├── etl_bank_pipeline.py      
 |       ├── aggregation_reporter.py   
-|       └── dashboard_plots.py        
+|       └── dashboard_plots.py
+│       
 ├── sql/                         # (Future)
-├── .github/workflows/           
+├── .github/workflows/
+├── tests/         
 ├── requirements.txt
 ├── .gitignore
+├── main.py
 └── README.md
 ```
 
