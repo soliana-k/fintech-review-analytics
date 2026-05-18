@@ -42,10 +42,8 @@ def generate_analytics_report(target_dir: str = "data/processed", banks: list = 
             print(f" Error: Master landing file missing at coordinate: {raw_source_path}")
             return
             
-     
         processed_df = pd.read_csv(file_path)
         raw_df = pd.read_csv(raw_source_path)
-        
         
         merged_df = pd.merge(
             processed_df, 
@@ -57,7 +55,6 @@ def generate_analytics_report(target_dir: str = "data/processed", banks: list = 
         
         if merged_df.empty:
             continue
-            
         
         agg_summary = merged_df.groupby('rating')['sentiment_score'].mean().reset_index()
         agg_summary.columns = ['Star Rating', 'Mean Sentiment Confidence']
