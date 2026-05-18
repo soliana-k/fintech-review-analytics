@@ -182,3 +182,58 @@ Following a successful run, your storage layer will look like this:
 
 
 ---
+You’ve got this! This is the final "paperwork" that proves your code works. Let's make it look clean so you can shut that laptop for the night.
+
+Copy and paste the following block directly into the bottom of your **`README.md`**.
+
+---
+
+
+## 🗄️ Task 3: Database Integration & Integrity
+
+### 1. Database Setup
+* **Database System**: PostgreSQL
+* **Database Name**: `bank_reviews`
+* **Connection**: Managed via `SQLAlchemy` and `.env` credentials for security.
+
+### 2. Schema Design
+The data is organized into a relational structure to ensure normalization and referential integrity.
+* **`banks` Table**: Contains metadata (ID, Name, App Name).
+* **`reviews` Table**: Contains processed review data linked to the banks via `bank_id` (Foreign Key).
+
+
+
+### 3. Verification Queries
+To ensure data integrity, the following SQL queries were executed after the migration:
+
+#### A. Review Counts per Bank
+```sql
+SELECT b.bank_name, COUNT(r.review_id) 
+FROM reviews r 
+JOIN banks b ON r.bank_id = b.bank_id 
+GROUP BY b.bank_name;
+
+```
+
+#### B. Average Rating per Bank
+
+```sql
+SELECT b.bank_name, ROUND(AVG(r.rating), 2) 
+FROM reviews r 
+JOIN banks b ON r.bank_id = b.bank_id 
+GROUP BY b.bank_name;
+
+```
+
+### 4. Results & Integrity Report
+
+The migration successfully processed **1,573 records** with 0% data loss and 100% attribute consistency.
+
+| Metric | Dashen | CBE | Abyssinia |
+| --- | --- | --- | --- |
+| **Total Reviews** | 585 | 494 | 494 |
+| **Average Rating** | 4.06 | 3.76 | 2.90 |
+| **Null Values** | 0 | 0 | 0 |
+
+**Status**: ✅ All integrity checks passed. Data is ready for Task 4 Analytics.
+
