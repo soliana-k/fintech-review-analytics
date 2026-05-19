@@ -44,6 +44,11 @@ fintech-review-analytics/
 ├── scripts/                      
 │   └── run.py
 │
+├── notebooks/                      
+│   └── main.ipynb
+│
+├── database/                      
+│   └── schema.sql
 ├── data/                      
 │   ├── raw/
 │   ├── plots/   
@@ -59,13 +64,14 @@ fintech-review-analytics/
 │       ├── init.py
 │       └── sentiment_transformer.py  
 │
+│    ├── storage/
+│       └── db_loader.py  
 │    └── pipelines/
 │       ├── init.py
 |       ├── etl_bank_pipeline.py      
 |       ├── aggregation_reporter.py   
 |       └── dashboard_plots.py
 │       
-├── sql/                         # (Future)
 ├── .github/workflows/
 ├── tests/         
 ├── requirements.txt
@@ -128,7 +134,7 @@ cd fintech-review-analytics
 To run the full end-to-end data platform architecture, execute the main package script from your **project root folder**:
 
 ```bash
-python src/main.py
+python main.py
 
 ```
 
@@ -181,13 +187,6 @@ Following a successful run, your storage layer will look like this:
 * **Separation of Concerns:** Zero cross-contamination. Data extraction, mathematical transformation, and file load persistence are entirely decoupled across isolated modules.
 
 
----
-You’ve got this! This is the final "paperwork" that proves your code works. Let's make it look clean so you can shut that laptop for the night.
-
-Copy and paste the following block directly into the bottom of your **`README.md`**.
-
----
-
 
 ## 🗄️ Task 3: Database Integration & Integrity
 
@@ -236,4 +235,77 @@ The migration successfully processed **1,573 records** with 0% data loss and 100
 | **Null Values** | 0 | 0 | 0 |
 
 **Status**: ✅ All integrity checks passed. Data is ready for Task 4 Analytics.
+
+---
+
+## 📊 Task 4: Automated Business Intelligence & Deep Insights
+
+### 1. Visualization Engine Architecture (`FintechVisualizer`)
+The analytics module transitions from stateless compute transformations into an automated Business Intelligence engine. Located in `src/pipelines/dashboard_plots.py` (or executed via the consolidated `FintechVisualizer` class), the component pulls relational rows across a PostgreSQL database connection using an engineered SQLAlchemy connection pool. 
+
+The visualization layer enforces global layout parameters (`seaborn.set_theme`), strict color palette mappings (`#e74c3c`, `#f1c40f`, `#2ecc71`), explicit text orientation boundaries, and dynamically calculates center inline bar markers to maximize presentation quality for executive reporting.
+
+### 2. Core Analytical Deliverables Staged
+The script generates and safely flushes 4 specific analytical assets to the project data storage layer under `data/plots/`:
+
+* **`sentiment_distribution.png` (Market Sentiment Share)**: A normalized, stacked bar chart charting relative customer sentiment distribution. Features bold, center-aligned percentage value labels and strict ordering boundaries (`['NEGATIVE', 'NEUTRAL', 'POSITIVE']`) to quickly show market share distribution.
+* **`rating_distribution.png` (User Rating Spread & Dispersion)**: A high-density box-and-whisker plot mapping the statistical distribution, median rating, interquartile range (IQR), and extreme outlier profiles of app store ratings across all target competitors.
+* **`sentiment_trend.png` (Top 5 System Pain Points)**: A focused vertical grouped bar chart isolating **Negative reviews only**, parsing out complaints across the top 5 operational failure categories to surface systemic software flaws.
+* **`theme_intensity_heatmap.png` (Cross-Tabulation Density Matrix)**: A cross-tabulation density map correlating `identified_theme` frequencies directly against individual `bank_name` columns, using an annotated color map gradient to pinpoint hidden friction clusters.
+
+---
+
+## 🔍 Data-Driven Competitive Insights & Recommendations
+
+The visualization engine uncovers clear operational bottlenecks that separate raw app performance from the marketing claims made by the apps.
+
+### 1. Bank of Abyssinia
+
+* **What the Data Shows:** * Underperforms significantly on user sentiment, with a massive **54.9% Negative Sentiment Share**, the highest among all three competitors.
+* The primary culprit is **`App Stability & Bugs`**, which registers **44 critical complaints** (nearly triple the volume of its competitors).
+* On a positive note, it maintains a **39.3% Positive Sentiment Ratio**, showing that users are receptive to its baseline feature set when it actually functions.
+
+
+* **Concrete Recommendations:**
+1. **Refactor Session & Login State Machines:** Prioritize an immediate code freeze and engineering sprint focused entirely on fixing the app-crashing bugs during authentication and startup.
+2. **Deploy Automated Error Telemetry:** Embed a tool like Firebase Crashlytics or Sentry to automatically capture stack traces on fragmented mobile builds, catching silent runtime exceptions before they cause a hard crash.
+
+
+
+###  2. Commercial Bank of Ethiopia (CBE)
+
+* **What the Data Shows:**
+* Holds a stable, solid market position with a **60.3% Positive Sentiment Ratio**, backed by high user trust in core transactional utility.
+* The leading operational friction point under `Account Access Issues` centers on **version depreciation** (blocking older Android 8/9 builds and Huawei devices) and **forced de-activation loops** that require in-person branch visits to fix after an app update.
+
+
+* **Concrete Recommendations:**
+1. **Optimize Token Persistence Across App Updates:** Engineering should fix session handling so that mandatory app updates don't clear local device authentication data or trigger security locks that force users to visit a branch to re-authenticate.
+2. **Introduce Legacy OS Target Builds:** Maintain lighter, backward-compatible API parameters and compile dedicated builds to avoid completely alienating users running older phone architectures or alternative mobile frameworks.
+
+
+
+### 3. Dashen Bank
+
+* **What the Data Shows:**
+* Emerges as the clear market leader with a commanding **70.6% Positive Sentiment Ratio** and a low negative footstep of just 25.1%.
+* Its core advantage lies in **`UI & Design`** (41 entries), indicating that the visual layout and user navigation are highly optimized.
+* The primary area for improvement is **`Transaction Performance`**, where it shows a slight spike of **41 complaints** regarding real-time processing and state-sync delays under high traffic loads.
+
+
+* **Concrete Recommendations:**
+1. **Introduce Client-Side Asset Caching:** Keep heavy UI visual assets local to the client app build to minimize network handshake delays, ensuring the interface remains snappy on slow cellular networks.
+2. **Isolate Ledger Polling Threads:** Decouple account data-syncing and polling mechanisms from the main UI runtime thread so that backend API delays under heavy traffic cycles never freeze up user interaction.
+
+---
+
+## 🛠️ Verification & Maintenance Playbook
+
+### Running Task 4 Exporter Independently
+If you want to manually regenerate the 4 production plots without spinning up the complete upstream scraping and ingestion cycle, execute the visualizer directly from the project root:
+
+```bash
+python src/pipelines/dashboard_plots.py
+```
+
 
